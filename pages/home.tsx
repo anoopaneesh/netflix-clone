@@ -10,7 +10,7 @@ interface homeProps{
     dummyMovies:Movie[]
     bannerMovie:Movie
 }
-const home = ({dummyMovies,bannerMovie}:homeProps) => {
+const Home = ({dummyMovies,bannerMovie}:homeProps) => {
    const {movie} = useMovie()
   return (
     <div>
@@ -42,7 +42,7 @@ const home = ({dummyMovies,bannerMovie}:homeProps) => {
   );
 };
 
-export default home;
+export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let dummyMovies = popularMovies.results
