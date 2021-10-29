@@ -2,6 +2,7 @@ import { InformationCircleIcon } from "@heroicons/react/solid";
 import { GetServerSideProps } from "next";
 import Banner from "../components/Banner";
 import Footer from "../components/Footer";
+import Header from "../components/Header";
 import MoviesContainer from "../components/MoviesContainer";
 import { useMovie } from "../context/MoviesContext";
 import popularMovies from "../dummy_data/PopularMovies";
@@ -14,6 +15,7 @@ const Home = ({dummyMovies,bannerMovie}:homeProps) => {
    const {movie} = useMovie()
   return (
     <div>
+      <Header />
       <Banner
         image={`${process.env.NEXT_PUBLIC_TMDB_IMG_BASEURL}${movie ? movie.backdrop_path : bannerMovie.backdrop_path}`}
         className="border-none"
