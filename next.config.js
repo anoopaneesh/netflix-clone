@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   images:{
-    domains:['firebasestorage.googleapis.com']
+    domains:['firebasestorage.googleapis.com','image.tmdb.org']
   },
   reactStrictMode: true,
 }

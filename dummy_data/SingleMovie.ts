@@ -1,0 +1,63 @@
+export default {
+  adult: false,
+  backdrop_path: "/Aebz7s8EHQXxHR98J8Vw6QVGggq.jpg",
+  belongs_to_collection: {
+    id: 726871,
+    name: "Dune Collection",
+    poster_path: "/wKNYdj5Wm2XamEQcpyikGWpTOPJ.jpg",
+    backdrop_path: "/iCFFmXkK5FdIzqZyyQQEdpkTo8C.jpg",
+  },
+  budget: 165000000,
+  genres: [
+    { id: 12, name: "Adventure" },
+    { id: 18, name: "Drama" },
+    { id: 14, name: "Fantasy" },
+    { id: 878, name: "Science Fiction" },
+  ],
+  homepage: "https://www.dunemovie.com/",
+  id: 438631,
+  imdb_id: "tt1160419",
+  original_language: "en",
+  original_title: "Dune",
+  overview:
+    "Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence-a commodity capable of unlocking humanity's greatest potential-only those who can conquer their fear will survive.",
+  popularity: 6245.254,
+  poster_path: "/d5NXSklXo0qyIYkgV94XAgMIckC.jpg",
+  production_companies: [
+    {
+      id: 174,
+      logo_path: "/IuAlhI9eVC9Z8UQWOIDdWRKSEJ.png",
+      name: "Warner Bros. Pictures",
+      origin_country: "US",
+    },
+    {
+      id: 923,
+      logo_path: "/5UQsZrfbfG2dYJbx8DxfoTr2Bvu.png",
+      name: "Legendary Pictures",
+      origin_country: "US",
+    },
+    {
+      id: 120830,
+      logo_path: null,
+      name: "Villeneuve Films",
+      origin_country: "CA",
+    },
+  ],
+  production_countries: [
+    { iso_3166_1: "CA", name: "Canada" },
+    { iso_3166_1: "US", name: "United States of America" },
+  ],
+  release_date: "2021-09-15",
+  revenue: 223211174,
+  runtime: 155,
+  spoken_languages: [
+    { english_name: "Mandarin", iso_639_1: "zh", name: "普通话" },
+    { english_name: "English", iso_639_1: "en", name: "English" },
+  ],
+  status: "Released",
+  tagline: "Beyond fear, destiny awaits.",
+  title: "Dune",
+  video: false,
+  vote_average: 8.0,
+  vote_count: 2822,
+};
