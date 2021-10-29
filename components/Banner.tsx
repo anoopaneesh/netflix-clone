@@ -18,9 +18,9 @@ const Banner = () => {
         </p>
         <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0">
             <input type="text" placeholder="Email address" 
-            className="outline-none border-none w-96 px-8 text-black  h-16"
+            className="outline-none border-none w-96 px-8 text-black  h-14"
             />
-            <div className="bg-red-600 px-4 py-1.5 flex whitespace-nowrap items-center  h-12 rounded-sm md:rounded-none md:h-16"><p className="text-xl md:text-2xl">Get Started</p>
+            <div className="bg-red-600 px-4 py-1.5 flex whitespace-nowrap items-center  h-12 rounded-sm md:rounded-none md:h-14"><p className="text-xl md:text-2xl">Get Started</p>
             <ChevronRightIcon className="h-8" />
             </div>
         </div>
