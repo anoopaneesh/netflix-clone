@@ -19,7 +19,7 @@ const index = () => {
       <section className="w-full bg-black text-white md:px-16 py-8">
       <h1 className="font-bold text-xl sm:text-3xl lg:text-4xl text-center py-4">Frequently Asked Questions</h1>
       <div className="flex flex-col space-y-2 max-w-2xl mx-auto">
-      {faqs.map(faq => <FAQ title={faq.title} description={faq.description} />)}
+      {faqs.map(faq => <FAQ key={faq.description} title={faq.title} description={faq.description} />)}
       </div>
       </section>
       {/* Signup */}
