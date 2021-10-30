@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { useMovie } from '../context/MoviesContext'
 import Movie from "../types/Movie"
 import {useState} from 'react'
 interface MoviesContainerProps{
