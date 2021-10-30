@@ -9,17 +9,22 @@ import Movie from "../types/Movie";
 import nookies from 'nookies'
 import {verifyIdToken} from '../firebaseAdmin'
 import { useAuth } from "../context/AuthProvider";
+import { getComedyMovies, getNewReleases, getPopularMovies, getTrendingMovies } from "../tmdb/movies";
 interface homeProps{
     dummyMovies:Movie[]
+    popularMovies:Movie[]
+    comedyMovies:Movie[]
+    trendingMovies:Movie[]
+    newReleases:Movie[]
     bannerMovie:Movie
 }
-const Home = ({dummyMovies,bannerMovie}:homeProps) => {
+const Home = ({dummyMovies,bannerMovie,popularMovies,trendingMovies,newReleases,comedyMovies}:homeProps) => {
   const {user} = useAuth()
   return (
     <div>
       <Header user={user} />
       <Banner
-        image={`${process.env.NEXT_PUBLIC_TMDB_IMG_BASEURL}${bannerMovie.backdrop_path}`}
+        image={`${process.env.NEXT_PUBLIC_TMDB_IMG_BASEURL}/original${bannerMovie.backdrop_path}`}
         className="border-none"
       >
         <div className="absolute bg-black bg-opacity-30 w-full h-full flex flex-col justify-end">
@@ -37,9 +42,10 @@ const Home = ({dummyMovies,bannerMovie}:homeProps) => {
         </div>
       </Banner>
       <main className="bg-black pb-16 px-8 md:px-16 space-y-10">
-        <MoviesContainer title="Popular Movies" movies={dummyMovies}/>
-        <MoviesContainer title="Trending Now" movies={dummyMovies}/>
-        <MoviesContainer title="New Releases" movies={dummyMovies}/>
+        <MoviesContainer title="Popular Movies" movies={popularMovies}/>
+        <MoviesContainer title="Trending Now" movies={trendingMovies}/>
+        <MoviesContainer title="New Releases" movies={newReleases}/>
+        <MoviesContainer title="Action Movies" movies={comedyMovies}/>
       </main>
       <Footer />
     </div>
@@ -53,13 +59,27 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const token = nookies.get(context).token
   try{
     let user = await verifyIdToken(token)
+    let {countryCode} = await fetch('https://extreme-ip-lookup.com/json/').then(res=>res.json())
+    const  popularMovies = await getPopularMovies({region:countryCode}).then(res => res.results)
+    const  newReleases = await getNewReleases({region:countryCode}).then(res => res.results)
+    const  comedyMovies = await getComedyMovies().then(res => res.results)
+    const  trendingMovies = await getTrendingMovies().then(res => res.results)
+    let bannerMovie =newReleases[Math.round(Math.random() * newReleases.length)]
+    while(!bannerMovie.backdrop_path){
+      bannerMovie = newReleases[Math.round(Math.random() * newReleases.length)]
+    }
     return {
       props: {
         dummyMovies,
-        bannerMovie:dummyMovies[0]
+        popularMovies,
+        trendingMovies,
+        newReleases,
+        comedyMovies,
+        bannerMovie
       }
     }
   }catch(err){
+    console.log(err)
     return {
       redirect:{
         permanent:false,
