@@ -63,7 +63,7 @@ const SignUp = ({ defaultEmail }: SignUpInterface) => {
                 </Link>
               </p>
               <p className="text-xs">
-                This page is protected by Google reCAPTCHA to ensure you're not
+                This page is protected by Google reCAPTCHA to ensure you&apos;re not
                 a bot. Learn more.
               </p>
             </div>
