@@ -4,27 +4,29 @@ import Banner from "../components/Banner";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import MoviesContainer from "../components/MoviesContainer";
-import { useMovie } from "../context/MoviesContext";
 import popularMovies from "../dummy_data/PopularMovies";
 import Movie from "../types/Movie";
+import nookies from 'nookies'
+import {verifyIdToken} from '../firebaseAdmin'
+import { useAuth } from "../context/AuthProvider";
 interface homeProps{
     dummyMovies:Movie[]
     bannerMovie:Movie
 }
 const Home = ({dummyMovies,bannerMovie}:homeProps) => {
-   const {movie} = useMovie()
+  const {user} = useAuth()
   return (
     <div>
-      <Header />
+      <Header user={user} />
       <Banner
-        image={`${process.env.NEXT_PUBLIC_TMDB_IMG_BASEURL}${movie ? movie.backdrop_path : bannerMovie.backdrop_path}`}
+        image={`${process.env.NEXT_PUBLIC_TMDB_IMG_BASEURL}${bannerMovie.backdrop_path}`}
         className="border-none"
       >
         <div className="absolute bg-black bg-opacity-30 w-full h-full flex flex-col justify-end">
-          <div className="flex flex-col items-start justify-end space-y-4 text-white text-left px-8 py-16">
-            <h1 className="text-6xl font-bold">{movie ? movie.title : bannerMovie.title}</h1>
+          <div className="flex flex-col items-start justify-end space-y-4 text-white text-left px-8 sm:px-16 py-16">
+            <h1 className="text-6xl font-bold">{bannerMovie.title}</h1>
             <p className="max-w-md line-clamp-3">
-              {movie ? movie.overview : bannerMovie.overview}
+              {bannerMovie.overview}
             </p>
             <button className="rounded-sm bg-gray-400 text-white px-4 py-2 flex items-center space-x-1">
               <InformationCircleIcon className="h-6" />
@@ -48,10 +50,21 @@ export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let dummyMovies = popularMovies.results
-  return {
-    props: {
+  const token = nookies.get(context).token
+  try{
+    let user = await verifyIdToken(token)
+    return {
+      props: {
         dummyMovies,
         bannerMovie:dummyMovies[0]
-    },
-  };
+      }
+    }
+  }catch(err){
+    return {
+      redirect:{
+        permanent:false,
+        destination:'/'
+      }
+    }
+  }
 };
