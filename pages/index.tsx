@@ -8,7 +8,7 @@ import {useRouter} from 'next/router'
 import HomeSection from "../components/HomeSection"
 import { ChevronRightIcon } from "@heroicons/react/solid"
 import Footer from "../components/Footer"
-const index = () => {
+const Index = () => {
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
   const handleGetStarted = () => {
@@ -69,4 +69,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index
