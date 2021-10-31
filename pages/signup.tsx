@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Banner from "../components/Banner";
 import Footer from "../components/Footer";
+import Head from 'next/head'
 import Header from "../components/Header";
 import { useAuth } from "../context/AuthProvider";
 interface SignUpInterface {
@@ -23,6 +24,9 @@ const SignUp = ({ defaultEmail }: SignUpInterface) => {
   };
   return (
     <div>
+      <Head>
+        <title>Sign Up | Netflix Clone</title>
+        </Head>
       <Header user={null} />
       <Banner
         image="https://firebasestorage.googleapis.com/v0/b/netflix-clone-235c7.appspot.com/o/assests%2Fbanner.jpg?alt=media&token=e35f1827-1db2-4062-ab4f-c3bf1d88cc89"

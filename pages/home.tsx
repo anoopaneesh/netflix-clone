@@ -4,25 +4,46 @@ import Banner from "../components/Banner";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import MoviesContainer from "../components/MoviesContainer";
-import popularMovies from "../dummy_data/PopularMovies";
 import Movie from "../types/Movie";
+import Head from 'next/head'
 import nookies from 'nookies'
 import {verifyIdToken} from '../firebaseAdmin'
+import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthProvider";
-import { getComedyMovies, getNewReleases, getPopularMovies, getTrendingMovies } from "../tmdb/movies";
+import { getComedyMovies, getNewReleases, getPopularMovies, getTrendingMovies, searchMovies } from "../tmdb/movies";
 interface homeProps{
-    dummyMovies:Movie[]
     popularMovies:Movie[]
     comedyMovies:Movie[]
     trendingMovies:Movie[]
     newReleases:Movie[]
     bannerMovie:Movie
 }
-const Home = ({dummyMovies,bannerMovie,popularMovies,trendingMovies,newReleases,comedyMovies}:homeProps) => {
+const Home = ({bannerMovie,popularMovies,trendingMovies,newReleases,comedyMovies}:homeProps) => {
   const {user} = useAuth()
+  const [search,setSearch] = useState("")
+  const [loadingSearch,setLoadingSearch] = useState(false)
+  const [searchResults,setSearchResults] = useState<Movie[]>([])
+  useEffect(()=>{
+    const getResults = async () => {
+      if(!loadingSearch){
+        setLoadingSearch(true)
+        let results = await fetch(`/api/search?q=${search}`).then(res => res.json())
+        if(results.status === 'success'){
+          setSearchResults(results.results.results)
+        }
+        setLoadingSearch(false)
+      }    
+    }
+    if(search.length){
+        getResults()
+    }
+  },[search])
   return (
     <div>
-      <Header user={user} />
+      <Head>
+        <title>Netflix Clone | Creative World Inc.</title>
+        </Head>
+      <Header user={user} search={search} setSearch={setSearch}/>
       <Banner
         image={`${process.env.NEXT_PUBLIC_TMDB_IMG_BASEURL}/original${bannerMovie.backdrop_path}`}
         className="border-none"
@@ -42,10 +63,11 @@ const Home = ({dummyMovies,bannerMovie,popularMovies,trendingMovies,newReleases,
         </div>
       </Banner>
       <main className="bg-black pb-16 px-8 md:px-16 space-y-10">
+        {search.length && searchResults.length && <MoviesContainer title="Search Results" movies={searchResults}/>}
         <MoviesContainer title="Popular Movies" movies={popularMovies}/>
         <MoviesContainer title="Trending Now" movies={trendingMovies}/>
         <MoviesContainer title="New Releases" movies={newReleases}/>
-        <MoviesContainer title="Action Movies" movies={comedyMovies}/>
+        <MoviesContainer title="Comedy Movies" movies={comedyMovies}/>
       </main>
       <Footer />
     </div>
@@ -55,7 +77,6 @@ const Home = ({dummyMovies,bannerMovie,popularMovies,trendingMovies,newReleases,
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  let dummyMovies = popularMovies.results
   const token = nookies.get(context).token
   try{
     let user = await verifyIdToken(token)
@@ -64,13 +85,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const  newReleases = await getNewReleases({region:countryCode}).then(res => res.results)
     const  comedyMovies = await getComedyMovies().then(res => res.results)
     const  trendingMovies = await getTrendingMovies().then(res => res.results)
-    let bannerMovie =newReleases[Math.round(Math.random() * newReleases.length)]
-    while(!bannerMovie.backdrop_path){
-      bannerMovie = newReleases[Math.round(Math.random() * newReleases.length)]
+    let bannerMovie=newReleases[Math.round(Math.random() * newReleases.length)]
+
+    while(!bannerMovie.backdrop_path || bannerMovie.original_language !== 'en'){
+      bannerMovie = newReleases[Math.round(Math.random() * (newReleases.length-2))]
     }
     return {
       props: {
-        dummyMovies,
         popularMovies,
         trendingMovies,
         newReleases,

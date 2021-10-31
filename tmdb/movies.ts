@@ -37,3 +37,12 @@ export const getComedyMovies = async () => {
         throw new Error("Error fetching comedy movies")
     }
 }
+
+export const searchMovies = async (query:string) => {
+    try{
+        let data = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.TMDB_API_KEY}&query=${query}`).then(res=>res.json())
+        return data
+    }catch(err){
+        throw new Error("Error fetching search results")
+    }
+}

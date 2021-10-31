@@ -7,8 +7,10 @@ import { User } from '@firebase/auth'
 import { Menu, Transition } from '@headlessui/react'
 interface HeaderProps{
     user:User|null
+    search?:string
+    setSearch?:any
 }
-const Header = ({user}:HeaderProps) => {
+const Header = ({user,search,setSearch}:HeaderProps) => {
     const [navbarState, setNavbarState] = useState(false)
     const router = useRouter()
     const {signout} = useAuth()
@@ -33,14 +35,19 @@ const Header = ({user}:HeaderProps) => {
     return (
         <div className={`flex py-2 px-8 lg:px-16 justify-between items-center fixed top-0 z-20 w-full transition duration-150 ease-out ${navbarState ? 'bg-black' : 'bg-transparent'}`}>
             {/* Icon */}
-            <div className="relative w-44 h-20 cursor-pointer" onClick={handleLogoClick}>
+            <div className="hidden md:inline-flex relative w-44 h-20 cursor-pointer" onClick={handleLogoClick}>
                 <Image src="https://firebasestorage.googleapis.com/v0/b/netflix-clone-235c7.appspot.com/o/assests%2Fnetflix.png?alt=media&token=d435cba5-fecc-4e68-9eb0-d701467f0493" layout="fill"
                 objectFit="contain" />
             </div>
+            <div className="md:hidden relative w-12 h-20 cursor-pointer" onClick={handleLogoClick}>
+                <Image src="https://firebasestorage.googleapis.com/v0/b/netflix-clone-235c7.appspot.com/o/assests%2FNetflix_Symbol_RGB.png?alt=media&token=6bb2060b-7a50-44bd-a2c2-2eb034a86924" layout="fill"
+                objectFit="contain" />
+            </div>
+            
             {/* Right */}
             <div className="flex items-center space-x-10">
-                {user ? <><input type="text" placeholder="Search" className="py-2 px-4 bg-[#222] rounded-sm text-white outline-none"/>
-                <SearchIcon className="h-6 text-white cursor-pointer" />
+                {user ? <><input type="text" value={search} onChange={(e)=>setSearch(e.target.value)} placeholder="Search" className="py-2 px-4 bg-[#222] rounded-sm text-white outline-none w-32 sm:w-64"/>
+                <SearchIcon className="h-6 text-white cursor-pointer hidden md:inline-flex" />
                
                
 

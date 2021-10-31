@@ -4,6 +4,7 @@ import { useState } from "react";
 import Banner from "../components/Banner";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import Head from 'next/head'
 import { useAuth } from "../context/AuthProvider";
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +20,9 @@ const SignIn = () => {
   };
   return (
     <div>
+      <Head>
+        <title>Sign In | Netflix Clone</title>
+        </Head>
         <Header user={null}/>
       <Banner
         image="https://firebasestorage.googleapis.com/v0/b/netflix-clone-235c7.appspot.com/o/assests%2Fbanner.jpg?alt=media&token=e35f1827-1db2-4062-ab4f-c3bf1d88cc89"

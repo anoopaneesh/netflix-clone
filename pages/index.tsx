@@ -7,6 +7,7 @@ import FAQ from "../components/FAQ"
 import {useRouter} from 'next/router'
 import HomeSection from "../components/HomeSection"
 import { ChevronRightIcon } from "@heroicons/react/solid"
+import Head from 'next/head'
 import Footer from "../components/Footer"
 const Index = () => {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -23,6 +24,9 @@ const Index = () => {
   }
   return (
     <div>
+      <Head>
+        <title>Netflix Clone | Creative World Inc.</title>
+        </Head>
       <Header user={null}/>
       <Banner image="https://firebasestorage.googleapis.com/v0/b/netflix-clone-235c7.appspot.com/o/assests%2Fbanner.jpg?alt=media&token=e35f1827-1db2-4062-ab4f-c3bf1d88cc89">
       <div className="absolute bg-black bg-opacity-70 w-full h-full flex flex-col items-center justify-center space-y-4 text-white text-center px-8">
